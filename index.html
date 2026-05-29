@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ecosystem Command Center — Raphasha27</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0d1117;
+      --surface: #161b22;
+      --surface-2: #1c2128;
+      --border: #30363d;
+      --primary: #00ffcc;
+      --accent: #58a6ff;
+      --gold: #ffd700;
+      --text: #f0f6fc;
+      --text-muted: #8b949e;
+      --success: #3fb950;
+      --danger: #f85149;
+      --warning: #d29922;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    .container { max-width: 1400px; margin: 0 auto; padding: 24px; }
+    header {
+      text-align: center; padding: 48px 24px 32px;
+      border-bottom: 1px solid var(--border); margin-bottom: 32px;
+    }
+    header h1 {
+      font-size: 2.5rem; font-weight: 700;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    header p { color: var(--text-muted); margin-top: 8px; font-size: 1.1rem; }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px; margin-bottom: 32px;
+    }
+    .stat-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 24px; text-align: center;
+      transition: border-color 0.2s;
+    }
+    .stat-card:hover { border-color: var(--primary); }
+    .stat-card .value { font-size: 2rem; font-weight: 700; margin-bottom: 4px; }
+    .stat-card .label { font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+    .stat-card .value.primary { color: var(--primary); }
+    .stat-card .value.accent { color: var(--accent); }
+    .stat-card .value.gold { color: var(--gold); }
+    .stat-card .value.success { color: var(--success); }
+    .repo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+      gap: 16px; margin-bottom: 32px;
+    }
+    .repo-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 20px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .repo-card:hover { border-color: var(--primary); transform: translateY(-2px); }
+    .repo-card .name {
+      font-size: 1.1rem; font-weight: 600; margin-bottom: 8px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .repo-card .name a { color: var(--accent); text-decoration: none; }
+    .repo-card .name a:hover { text-decoration: underline; }
+    .repo-card .desc { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 12px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .repo-card .meta { display: flex; gap: 16px; font-size: 0.85rem; color: var(--text-muted); flex-wrap: wrap; }
+    .repo-card .meta span { display: flex; align-items: center; gap: 4px; }
+    .repo-card .lang-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+    .badge { font-size: 0.75rem; padding: 2px 8px; border-radius: 20px; font-weight: 500; }
+    .badge.public { background: #1f6feb22; color: #58a6ff; border: 1px solid #1f6feb44; }
+    .badge.private { background: #f8514922; color: #f85149; border: 1px solid #f8514944; }
+    .badge.primary { background: #00ffcc22; color: #00ffcc; border: 1px solid #00ffcc44; }
+    .section-title {
+      font-size: 1.3rem; font-weight: 600; margin-bottom: 16px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .section-title .count {
+      font-size: 0.9rem; color: var(--text-muted); font-weight: 400;
+    }
+    footer {
+      text-align: center; padding: 32px; color: var(--text-muted);
+      font-size: 0.85rem; border-top: 1px solid var(--border);
+    }
+    .loading {
+      text-align: center; padding: 48px; color: var(--text-muted);
+    }
+    .error {
+      text-align: center; padding: 24px; color: var(--danger);
+      background: var(--surface); border: 1px solid var(--danger); border-radius: 12px; margin: 24px 0;
+    }
+    .last-updated { text-align: center; color: var(--text-muted); font-size: 0.8rem; margin-bottom: 24px; }
+    .timeframe-selector { display: flex; gap: 8px; justify-content: center; margin-bottom: 24px; }
+    .timeframe-btn { padding: 6px 16px; border-radius: 20px; border: 1px solid var(--border); background: var(--surface); color: var(--text-muted); cursor: pointer; font-size: 0.85rem; transition: all 0.2s; }
+    .timeframe-btn.active { border-color: var(--primary); color: var(--primary); background: #00ffcc11; }
+    .timeframe-btn:hover { border-color: var(--accent); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>⚡ Ecosystem Command Center</h1>
+      <p>Real-time health and analytics for the Raphasha27 GitHub ecosystem</p>
+    </header>
+
+    <div id="stats" class="stats-grid"></div>
+    <p id="lastUpdated" class="last-updated"></p>
+
+    <div class="section-title">
+      📦 Priority Repositories <span class="count" id="repoCount"></span>
+    </div>
+    <div id="repos" class="repo-grid"></div>
+
+    <footer>
+      <p>Ecosystem Command Center · Raphasha27 · Kirov Dynamics Technology</p>
+      <p style="margin-top: 4px;">Data refreshes on each page load via the GitHub API</p>
+    </footer>
+  </div>
+
+  <script>
+    const USERNAME = 'Raphasha27';
+    const PRIORITY_REPOS = [
+      'Portfolio', 'AI-Agent', 'Github-Harden', 'Go-RAG-System',
+      'autonomous-dev-factory-v7', 'repo-audit-bot', 'enterprise-fastapi-starter',
+      'saas-multitenant-backend', 'Nexus-Quant', 'cybershield_soc'
+    ];
+
+    const LANG_COLORS = {
+      'JavaScript': '#f1e05a', 'TypeScript': '#3178c6', 'Python': '#3572A5',
+      'Go': '#00ADD8', 'Rust': '#dea584', 'C': '#555555', 'C++': '#f34b7d',
+      'HTML': '#e34c26', 'CSS': '#563d7c', 'Dart': '#00B4AB', 'Vue': '#41b883',
+      'Shell': '#89e051', 'Makefile': '#427819', 'PHP': '#4F5D95', 'C#': '#178600',
+      'Dockerfile': '#384d54', 'Solidity': '#AA6746', 'Ruby': '#701516',
+    };
+
+    async function fetchAPI(endpoint) {
+      const res = await fetch(`https://api.github.com/${endpoint}`, {
+        headers: { 'Accept': 'application/vnd.github.v3+json' }
+      });
+      if (!res.ok) throw new Error(`API error: ${res.status}`);
+      return res.json();
+    }
+
+    async function load() {
+      const statsEl = document.getElementById('stats');
+      const reposEl = document.getElementById('repos');
+      const repoCountEl = document.getElementById('repoCount');
+      const lastUpdatedEl = document.getElementById('lastUpdated');
+
+      try {
+        const [user, repos] = await Promise.all([
+          fetchAPI(`users/${USERNAME}`),
+          fetchAPI(`users/${USERNAME}/repos?per_page=100&sort=updated&direction=desc`)
+        ]);
+
+        const priorityRepos = repos.filter(r => PRIORITY_REPOS.includes(r.name));
+        const sorted = priorityRepos.sort((a, b) => b.stargazers_count - a.stargazers_count);
+
+        // Stats
+        const totalStars = repos.reduce((s, r) => s + r.stargazers_count, 0);
+        const totalForks = repos.reduce((s, r) => s + r.forks_count, 0);
+        const totalRepos = repos.length;
+        const publicRepos = repos.filter(r => !r.private).length;
+        const langStats = {};
+        repos.filter(r => r.language).forEach(r => {
+          langStats[r.language] = (langStats[r.language] || 0) + 1;
+        });
+        const topLang = Object.entries(langStats).sort((a, b) => b[1] - a[1]).slice(0, 3).map(e => e[0]).join(', ');
+
+        statsEl.innerHTML = [
+          { value: totalStars, label: 'Total Stars', cls: 'gold' },
+          { value: totalForks, label: 'Total Forks', cls: 'accent' },
+          { value: user.followers, label: 'Followers', cls: 'primary' },
+          { value: user.public_repos, label: 'Public Repos', cls: 'success' },
+          { value: user.public_gists, label: 'Public Gists', cls: 'accent' },
+          { value: priorityRepos.length, label: 'Priority Repos', cls: 'primary' },
+        ].map(s => `<div class="stat-card"><div class="value ${s.cls}">${s.value}</div><div class="label">${s.label}</div></div>`).join('');
+
+        repoCountEl.textContent = `(${sorted.length} of ${totalRepos} total)`;
+
+        // Repo cards
+        reposEl.innerHTML = sorted.map(repo => {
+          const langColor = LANG_COLORS[repo.language] || '#8b949e';
+          const updated = new Date(repo.pushed_at).toLocaleDateString('en-ZA', {
+            day: 'numeric', month: 'short', year: 'numeric'
+          });
+          const visibility = repo.private ? 'private' : 'public';
+          return `
+            <div class="repo-card">
+              <div class="name">
+                <a href="${repo.html_url}" target="_blank">${repo.name}</a>
+                <span class="badge ${visibility}">${visibility}</span>
+              </div>
+              <div class="desc">${repo.description || 'No description'}</div>
+              <div class="meta">
+                ${repo.language ? `<span><span class="lang-dot" style="background:${langColor}"></span>${repo.language}</span>` : ''}
+                <span>⭐ ${repo.stargazers_count}</span>
+                <span>⑂ ${repo.forks_count}</span>
+                <span>🔄 ${updated}</span>
+                ${repo.open_issues_count > 0 ? `<span>⚠️ ${repo.open_issues_count} issues</span>` : ''}
+              </div>
+            </div>
+          `;
+        }).join('');
+
+        lastUpdatedEl.textContent = `Last refreshed: ${new Date().toISOString().replace('T', ' ').slice(0, 19)} UTC`;
+
+      } catch (err) {
+        statsEl.innerHTML = `<div class="error">Failed to load ecosystem data: ${err.message}</div>`;
+      }
+    }
+
+    load();
+  </script>
+</body>
+</html>
