@@ -1,41 +1,19 @@
-## Summary
-<!-- Briefly describe what this PR does -->
+## Description
+<!-- A clear and concise description of the changes -->
 
 ## Type of Change
-- [ ] 🐛 Bug fix (non-breaking)
-- [ ] ✨ New feature
-- [ ] 🔧 Refactor / improvement
-- [ ] 📝 Documentation update
-- [ ] 🔒 Security patch
-- [ ] ⚙️ CI/CD or tooling change
-- [ ] 🚨 Breaking change
+- [ ] Bug fix
+- [ ] New feature
+- [ ] Breaking change
+- [ ] Documentation update
+- [ ] Refactor
 
-## Changes Made
-<!-- List all significant changes -->
--
--
--
+## How Has This Been Tested?
+<!-- Describe the tests you ran to verify your changes -->
 
-## Testing
-- [ ] I have run existing tests and they pass
-- [ ] I have added new tests covering my changes
-- [ ] Manual testing performed (describe below)
-
-**Test Steps:**
-1.
-2.
-
-## Security Checklist
-- [ ] No secrets or credentials committed
-- [ ] No new dependencies with known vulnerabilities
-- [ ] Input validation applied where necessary
-- [ ] Principle of least privilege maintained
-
-## Screenshots (if applicable)
-<!-- Add screenshots for UI changes -->
-
-## Related Issues
-Closes #
-
-## Reviewer Notes
-<!-- Anything specific for the reviewer to focus on -->
+## Checklist
+- [ ] My code follows the project's style guidelines
+- [ ] I have performed a self-review of my code
+- [ ] I have added tests that prove my fix is effective or that my feature works
+- [ ] New and existing tests pass locally
+- [ ] I have updated the documentation accordingly

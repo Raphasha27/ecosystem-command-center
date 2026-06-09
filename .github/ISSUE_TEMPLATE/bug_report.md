@@ -1,31 +1,23 @@
 ---
 name: Bug Report
-about: Report a bug to help us improve
-title: '[BUG] '
+about: Create a report to help us improve
 labels: bug
-assignees: ''
-
 ---
 
-## Bug Description
-A clear and concise description of the bug.
+## Describe the Bug
+A clear and concise description of what the bug is.
 
-## Steps to Reproduce
-1. Go to '...'
-2. Click on '...'
-3. Scroll down to '...'
-4. See error
+## To Reproduce
+Steps to reproduce the behavior:
+1. Run command '...'
+2. See error
 
 ## Expected Behavior
-A clear description of what you expected to happen.
-
-## Screenshots / Logs
-If applicable, add screenshots or log output.
+A clear and concise description of what you expected to happen.
 
 ## Environment
-- OS: [e.g. Windows, Ubuntu, macOS]
-- Browser: [e.g. Chrome, Firefox]
-- Version: [e.g. v1.2.3]
+- OS: [e.g. Ubuntu 22.04, macOS 14, Windows 11]
+- Version/commit: [e.g. v0.1.0, abc1234]
 
 ## Additional Context
 Add any other context about the problem here.
