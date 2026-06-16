@@ -1,16 +1,11 @@
 # Security Policy
 
 ## Supported Versions
-We actively maintain security patches for:
 
-| Version | Supported |
-| :--- | :---: |
-| v1.0.0+ | 🟢 Yes |
+We actively support and patch the latest version of this repository.
 
 ## Reporting a Vulnerability
-**Please do not report vulnerabilities publicly through Github Issues.** 
 
-Report all vulnerabilities privately to:
-- **Email**: 402106633@my.richfield.ac.za
+If you find a security vulnerability, please do NOT open a public issue. Instead, report it privately by opening a draft [Security Advisory](https://github.com/Raphasha27/ecosystem-command-center/security/advisories) on GitHub.
 
-We will acknowledge receipt within 48 hours and work with you to patch the issue before public disclosure.
+We will investigate and respond within 48 hours.
